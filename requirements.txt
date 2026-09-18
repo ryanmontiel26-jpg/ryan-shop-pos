@@ -1,0 +1,2 @@
+﻿# Dependencias del proyecto
+# Tkinter viene preinstalado en la biblioteca estándar de Python en Windows/macOS.
