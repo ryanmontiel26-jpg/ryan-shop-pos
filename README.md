@@ -1,8 +1,8 @@
-﻿# 🐍 Guía Práctica y Colección de Funcionalidades de Tkinter en Python
+﻿# ✨ Haute Parfumerie System — Colección de Módulos Tkinter en Python
 
-Este repositorio contiene una colección estructurada, didáctica y progresiva de scripts en **Python** que demuestran las capacidades y componentes de la biblioteca de interfaz gráfica de usuario (GUI) **Tkinter** y su extensión moderna **TTK (Themed Tk)**.
+Este repositorio contiene una suite completa y didáctica de aplicaciones y módulos desarrollados en **Python** utilizando la librería gráfica **Tkinter** y su versión avanzada **TTK (Themed Tk)**.
 
-El proyecto abarca desde los componentes visuales elementales hasta la integración de eventos del sistema, manejo de archivos, lienzos de dibujo bidimensional y una aplicación completa de escritorio orientada a objetos (POO).
+Todo el proyecto está ambientado en el fascinante universo de la **Alta Perfumería y Fragancias de Lujo (Haute Parfumerie / Ryan.ShopMx)**. A través de este hilo temático, cada script demuestra de forma práctica y visual diferentes componentes, layouts, eventos y técnicas de desarrollo de interfaces de escritorio.
 
 ---
 
@@ -11,185 +11,202 @@ El proyecto abarca desde los componentes visuales elementales hasta la integraci
 ```text
 ryan-shop-pos/
 │
-├── 01_widgets_basicos.py             # Widgets elementales y variables de control
-├── 02_administradores_geometria.py   # Comparativa de pack(), grid() y place()
-├── 03_dialogos_y_ventanas.py         # Diálogos, archivos, colores y Toplevel
-├── 04_ttk_avanzado.py                # Tablas (Treeview), Combobox y Progressbar
-├── 05_canvas_y_eventos.py            # Gráficos 2D, mouse bindings y Mini Paint
-├── 06_menus_y_atajos.py              # Barra de menús, clic derecho y atajos de teclado
-├── main.py                           # Proyecto Integrador: Haute Parfumerie POS
+├── 01_widgets_basicos.py             # Asesor de fragancias y perfil olfativo
+├── 02_administradores_geometria.py   # Diseño de vitrinas (pack, grid, place)
+├── 03_dialogos_y_ventanas.py         # Consultas de tienda y pirámide olfativa modal
+├── 04_ttk_avanzado.py                # Inventario de fragancias y maceración en laboratorio
+├── 05_canvas_y_eventos.py            # Taller de grabado y personalización de frascos
+├── 06_menus_y_atajos.py              # Bitácora de fórmulas maestras y reseñas de notas
+├── main.py                           # Sistema POS completo para Ryan.ShopMx
 │
-├── requirements.txt                  # Archivo de dependencias del entorno
-├── .gitignore                        # Reglas de exclusión para Git
+├── requirements.txt                  # Dependencias del entorno
+├── .gitignore                        # Archivos excluidos por Git
 └── README.md                         # Documentación detallada del proyecto
 ```
 
 ---
 
-## 📖 Descripción Detallada de Cada Archivo
+## 📖 Explicación Detallada de Cada Archivo de Código
 
-### 1. `01_widgets_basicos.py` — Widgets Elementales y Variables de Control
-* **Objetivo:** Introducir los componentes gráficos primarios de interacción y el enlace reactivo de datos mediante variables de control de Tkinter.
-* **Componentes y Conceptos Demostrados:**
-  * `tk.Label`: Etiquetas de texto estático y formateo con fuentes personalizadas.
-  * `tk.Entry`: Cajas de texto de una sola línea para captura de datos del usuario.
-  * `tk.Button`: Botones con comandos asociados (`command=funcion`).
-  * `tk.Checkbutton`: Casillas de verificación para valores booleanos.
-  * `tk.Radiobutton`: Botones de selección excluyente con grupos de opciones.
-  * `tk.Scale`: Control deslizante numérico (slider) horizontal.
-  * `StringVar`, `IntVar`, `BooleanVar`: Variables especiales de Tkinter que sincronizan los datos con los widgets en tiempo real.
-* **Lo que hace:** Despliega un formulario interactivo de preferencias de usuario. Al presionar *Enviar / Actualizar*, recopila el estado de todos los widgets y actualiza una etiqueta de resumen con formato de consola.
-* **Ejecución:**
+### 1. `01_widgets_basicos.py` — Asesor de Fragancias y Perfil Olfativo
+* **Tema en Perfumería:** Asesor interactivo de la boutique para diagnosticar el gusto olfativo de un cliente y recomendarle una fragancia adecuada.
+* **Componentes de Tkinter Utilizados:**
+  * `tk.Label`: Títulos y membrete elegante en negro y dorado.
+  * `tk.Entry`: Entrada de texto para capturar el nombre del cliente.
+  * `tk.Radiobutton`: Selector exclusivo de familia olfativa (Amaderada, Oriental, Cítrica / Fresca, Gourmand / Dulce).
+  * `tk.Checkbutton`: Opciones de servicio adicional (muestra decant 2ml de cortesía, caja con sello lacrado).
+  * `tk.Scale`: Control deslizante (slider) para determinar la concentración de esencia deseada (% de aceite).
+  * `tk.Button`: Botones de acción (*Descubrir Fragancia* y *Reiniciar*).
+  * `StringVar`, `BooleanVar`: Variables reactivas de Tkinter que actualizan la vista en tiempo real.
+* **Lo que hace el programa:** Permite al usuario configurar sus preferencias de perfume. Al hacer clic en el botón dorado, el programa procesa los datos y emite una recomendación personalizada con precio y detalles en una tarjeta con formato de consola.
+* **Comando para ejecutar:**
   ```bash
   python 01_widgets_basicos.py
   ```
 
 ---
 
-### 2. `02_administradores_geometria.py` — Métodos de Posicionamiento y Layout
-* **Objetivo:** Comprender y comparar los tres administradores de geometría que ofrece Tkinter para diseñar interfaces adaptables y ordenadas.
-* **Componentes y Conceptos Demostrados:**
-  * `pack()`: Posicionamiento por bloques y laterales (`side="top|bottom|left|right"`), distribución de espacio (`fill="x|y|both"`), y expansión proporcional (`expand=True`).
-  * `grid()`: Sistema matricial basado en filas y columnas (`row`, `column`), unión de celdas (`columnspan`, `rowspan`), alineación (`sticky="nsew"`), y pesos de redimensionamiento (`columnconfigure`).
-  * `place()`: Control de coordenadas exactas tanto absolutas en píxeles (`x`, `y`) como relativas/porcentuales respecto al tamaño de la ventana (`relx`, `rely`, `relwidth`).
-  * `ttk.Notebook`: Pestañas para alternar entre las tres demostraciones sin recargar la ventana.
-* **Lo que hace:** Muestra una ventana con 3 pestañas visuales interactivas, cada una dedicada a ilustrar el comportamiento visual y las propiedades clave de cada administrador de geometría.
-* **Ejecución:**
+### 2. `02_administradores_geometria.py` — Diseño de Vitrinas y Estanterías
+* **Tema en Perfumería:** Organización espacial y maquetación de mostradores, estanterías matriciales y escaparates VIP para exhibir perfumes.
+* **Componentes de Tkinter Utilizados:**
+  * `pack()`: Demuestra distribución por lados (`side="top"`, `side="bottom"`, `side="left"`, `side="right"`) y expansión proporcional (`fill="both"`, `expand=True`).
+  * `grid()`: Demuestra cuadrículas estructuradas en filas (`row`) y columnas (`column`), expansión de columnas (`columnspan=3`) y configuración de pesos (`columnconfigure`).
+  * `place()`: Demuestra coordenadas milimétricas exactas (`x`, `y`) y relativas porcentuales (`relx`, `rely`, `relwidth`, `anchor="center"`).
+  * `ttk.Notebook`: Sistema de navegación por pestañas para alternar entre las tres vitrinas interactivamente.
+* **Lo que hace el programa:** Presenta tres salas de exhibición:
+  1. *Vitrina Lineal (pack):* Muestra un lanzamiento estrella arriba (Baccarat Rouge 540), decants económicos abajo y colecciones Nicho/Diseñador en los laterales.
+  2. *Estantería Modular (grid):* Muestra una matriz ordenada por categorías de lujo con un banner publicitario inferior.
+  3. *Escaparate VIP (place):* Coloca frascos en las esquinas y un frasco estelar (*Clive Christian No. 1*) flotando en el centro exacto del cristal.
+* **Comando para ejecutar:**
   ```bash
   python 02_administradores_geometria.py
   ```
 
 ---
 
-### 3. `03_dialogos_y_ventanas.py` — Cuadros de Diálogo del Sistema y Modales
-* **Objetivo:** Aprender a comunicarse con el usuario a través de alertas del sistema operativo, selectores nativos y ventanas secundarias.
-* **Componentes y Conceptos Demostrados:**
-  * `tkinter.messagebox`: Despliegue de ventanas emergentes estándar de Información (`showinfo`), Advertencia (`showwarning`), Error (`showerror`) y Pregunta booleana (`askyesno`).
-  * `tkinter.filedialog`: Explorador de archivos nativo del sistema para abrir (`askopenfilename`) o guardar archivos (`asksaveasfilename`) con filtros de extensión.
-  * `tkinter.colorchooser`: Paleta nativa para selección de color interactivo (`askcolor`), devolviendo tuplas RGB y códigos hexadecimales.
-  * `tk.Toplevel`: Creación de ventanas secundarias independientes con capacidad de bloqueo modal mediante `grab_set()`.
-* **Lo que hace:** Ofrece un panel de control con botones que detonan cada tipo de diálogo del sistema y registra en pantalla las rutas, respuestas o colores elegidos por el usuario.
-* **Ejecución:**
+### 3. `03_dialogos_y_ventanas.py` — Centro de Consultas y Pirámide Olfativa Modal
+* **Tema en Perfumería:** Gestión de alertas operativas de boutique (stock, pagos, envolturas) y visualizador de fichas técnicas olfativas.
+* **Componentes de Tkinter Utilizados:**
+  * `tkinter.messagebox`: Despliegue de ventanas emergentes estándar del sistema operativo:
+    * `showinfo`: Confirmación de ubicación de stock en bodega.
+    * `showwarning`: Alerta de inventario crítico (últimas 2 piezas).
+    * `showerror`: Fallo de conexión de terminal bancaria.
+    * `askyesno`: Pregunta de confirmación para empaque de lujo con satín dorado.
+  * `tkinter.filedialog`:
+    * `asksaveasfilename`: Exportación de lista de deseos (*Wishlist*) a un archivo de texto `.txt`.
+    * `askopenfilename`: Importación de catálogo externo desde el disco duro.
+  * `tkinter.colorchooser`:
+    * `askcolor`: Selector de color nativo para cambiar el tono del frasco o fondo en vivo.
+  * `tk.Toplevel` y `.grab_set()`: Ventana emergente secundaria con bloqueo modal que impide interactuar con la ventana principal hasta cerrarla.
+* **Lo que hace el programa:** Proporciona un tablero interactivo con botones que disparan cada tipo de diálogo. Al abrir la ficha técnica, se despliega una ventana modal con la pirámide olfativa completa de *Xerjoff Erba Pura* desglosada en Notas de Salida, Corazón y Fondo.
+* **Comando para ejecutar:**
   ```bash
   python 03_dialogos_y_ventanas.py
   ```
 
 ---
 
-### 4. `04_ttk_avanzado.py` — Tablas de Datos, Combobox y Barra de Progreso
-* **Objetivo:** Usar la biblioteca `ttk` (Themed Tkinter) para crear interfaces modernas, estilizadas y profesionales.
-* **Componentes y Conceptos Demostrados:**
-  * `ttk.Treeview`: Renderizado de tablas de datos multidimensionales con cabeceras configurables, alineación de columnas y soporte para selección de filas.
-  * `ttk.Scrollbar`: Barra de desplazamiento vertical vinculada bidireccionalmente con la tabla.
-  * `ttk.Combobox`: Menú desplegable con autocompletado y captura de eventos de selección (`<<ComboboxSelected>>`).
-  * `ttk.Progressbar`: Barra de carga animada mediante temporizadores (`root.after`).
-  * `ttk.Style`: Personalización de temas visuales (`theme_use("clam")`) y estilos de cabecera.
-* **Lo que hace:** Presenta una tabla con inventario de productos (ID, categoría, nombre, precio, existencias) que se filtra dinámicamente al seleccionar opciones en el Combobox, además de una barra de progreso interactiva con botones para simular o reiniciar una tarea pesada.
-* **Ejecución:**
+### 4. `04_ttk_avanzado.py` — Inventario de Fragancias y Laboratorio de Maceración
+* **Tema en Perfumería:** Control de existencias de perfumes y monitoreo del proceso de añejamiento/maceración de aceites en laboratorio.
+* **Componentes de Tkinter Utilizados:**
+  * `ttk.Treeview`: Tabla interactiva con cabeceras de columnas, anchos específicos, alineación de texto y soporte para selección de filas.
+  * `ttk.Scrollbar`: Barra de desplazamiento vertical acoplada dinámicamente a la tabla.
+  * `ttk.Combobox`: Menú desplegable con captura del evento `<<ComboboxSelected>>` para filtrar el catálogo en tiempo real.
+  * `ttk.Progressbar`: Barra de carga animada que simula el avance de días de reposo.
+  * `ttk.Style`: Personalización del tema visual (*clam*) con colores dorado y grafito.
+  * `root.after()`: Temporizador asíncrono que actualiza la animación del laboratorio sin congelar la ventana.
+* **Lo que hace el programa:** Permite filtrar una tabla con 8 fragancias de alta gama por Casa (Xerjoff, Tom Ford, Dior, Jean Paul Gaultier, Perfumería Árabe). En la parte inferior, permite simular el proceso de maceración química de 45 días con una barra animada y porcentaje en vivo.
+* **Comando para ejecutar:**
   ```bash
   python 04_ttk_avanzado.py
   ```
 
 ---
 
-### 5. `05_canvas_y_eventos.py` — Gráficos 2D, Eventos del Ratón y Mini Paint
-* **Objetivo:** Manipular el lienzo de dibujo de Tkinter y capturar eventos de entrada del usuario en tiempo real.
-* **Componentes y Conceptos Demostrados:**
-  * `tk.Canvas`: Área de gráficos vectoriales 2D.
-  * Métodos de dibujo: `create_rectangle`, `create_oval`, `create_line`, `create_text`.
-  * Eventos del ratón vinculados con `bind()`:
-    * `<Button-1>`: Clic izquierdo presionado (registro del punto de inicio).
-    * `<B1-Motion>`: Arrastre del ratón con el clic presionado (trazo continuo de líneas).
-    * `<ButtonRelease-1>`: Clic izquierdo liberado.
-    * `<Motion>`: Seguimiento en tiempo real de las coordenadas (X, Y) del puntero.
-* **Lo que hace:** Proporciona una pizarra digital interactiva (Mini Paint) donde el usuario puede elegir colores de una paleta, variar el grosor del pincel, ver figuras geométricas de demostración, dibujar a mano alzada y borrar el lienzo.
-* **Ejecución:**
+### 5. `05_canvas_y_eventos.py` — Taller de Grabado y Personalización de Frascos
+* **Tema en Perfumería:** Servicio VIP de personalización donde el cliente graba sus iniciales o dedicatoria directamente en la placa dorada del frasco.
+* **Componentes de Tkinter Utilizados:**
+  * `tk.Canvas`: Lienzo gráfico donde se dibuja un frasco tridimensional vectorial con tapón dorado, atomizador plateado, vidrio reflectante y placa central.
+  * Métodos gráficos: `create_rectangle`, `create_oval`, `create_line`, `create_text`.
+  * Eventos del Mouse (`bind`):
+    * `<Button-1>`: Clic inicial del puntero láser sobre el frasco.
+    * `<B1-Motion>`: Arrastre para realizar el trazo a mano alzada.
+    * `<Motion>`: Lectura en tiempo real de las coordenadas (X, Y) del puntero.
+* **Lo que hace el programa:** El usuario puede cambiar el color del líquido del perfume (Dorado Erba Pura, Azul Sauvage, Rubí Baccarat o Ámbar Oud), ajustar el grosor del puntero y dibujar o firmar libremente sobre la etiqueta del frasco.
+* **Comando para ejecutar:**
   ```bash
   python 05_canvas_y_eventos.py
   ```
 
 ---
 
-### 6. `06_menus_y_atajos.py` — Barra de Menús, Menú Contextual y Atajos de Teclado
-* **Objetivo:** Crear una experiencia de aplicación de escritorio completa con navegación jerárquica y atajos de productividad.
-* **Componentes y Conceptos Demostrados:**
-  * `tk.Menu`: Barra de menús superior con menús desplegables (Archivo, Edición, Ayuda) y separadores visuales.
-  * Menú Contextual (Clic derecho): Menú flotante que aparece en la posición exacta del cursor mediante el método `.post(x, y)`.
-  * Atajos de Teclado (Accelerators & Binds): Enlace de atajos como `Ctrl+N` (Nuevo), `Ctrl+S` (Guardar) y `Ctrl+Q` (Salir).
-  * `tk.Text`: Área de texto enriquecido multilinea con soporte para operaciones de portapapeles (`<<Cut>>`, `<<Copy>>`, `<<Paste>>`).
-* **Lo que hace:** Implementa un editor de notas funcional que permite redactar texto, abrir y guardar archivos en disco, realizar operaciones de edición desde la barra de menú o con clic derecho, y controlar la aplicación mediante atajos de teclado.
-* **Ejecución:**
+### 6. `06_menus_y_atajos.py` — Bitácora de Fórmulas y Reseñas Olfativas
+* **Tema en Perfumería:** Cuaderno digital de laboratorio para que el perfumista diseñe pirámides olfativas y fórmulas maestras de fragancias.
+* **Componentes de Tkinter Utilizados:**
+  * `tk.Menu`: Barra superior con menús desplegables:
+    * *Archivo:* Nueva Bitácora, Cargar Fórmula, Guardar Fórmula, Salir.
+    * *Acordes Olfativos:* Inserción automática de plantillas de notas cítricas, orientales y amaderadas.
+    * *Edición:* Operaciones estándar de portapapeles (`<<Cut>>`, `<<Copy>>`, `<<Paste>>`).
+    * *Ayuda:* Glosario técnico de términos de perfumería (*Sillage*, *Longevidad*, *Decant*).
+  * Menú Contextual Flotante: Menú que aparece en la posición exacta del cursor al hacer **clic derecho** sobre el texto (`menu.post(x, y)`).
+  * Atajos de Teclado (Accelerators): Vinculación de combinaciones rápidas mediante `bind`:
+    * <kbd>Ctrl</kbd> + <kbd>N</kbd> : Nueva bitácora en blanco.
+    * <kbd>Ctrl</kbd> + <kbd>S</kbd> : Guardar fórmula en archivo de texto `.txt`.
+    * <kbd>Ctrl</kbd> + <kbd>Q</kbd> : Cerrar la aplicación.
+  * `tk.Text` con `Scrollbar`: Área de edición multilinea con soporte para caracteres especiales y formato de notas.
+* **Lo que hace el programa:** Es un editor de texto especializado para perfumistas. Incluye una plantilla predefinida con la fórmula de *Golden Elixir No. 7*, permite guardar y abrir fórmulas desde el disco duro y agregar acordes rápidamente con clic derecho.
+* **Comando para ejecutar:**
   ```bash
   python 06_menus_y_atajos.py
   ```
 
 ---
 
-### 7. `main.py` — Proyecto Integrador: Sistema POS de Alta Perfumería
-* **Objetivo:** Integrar múltiples widgets, gestión de estado y diseño estético en una aplicación del mundo real utilizando Programación Orientada a Objetos (POO).
-* **Componentes y Conceptos Demostrados:**
-  * Arquitectura orientada a objetos (`class RyanShopApp`).
-  * Paleta visual personalizada estilo *Dark Luxury* (`#121212`, `#1b1b1b` y dorado `#d4af37`).
-  * Organización de pantalla a dos columnas con `LabelFrame`.
-  * Filtro dinámico de catálogo por categorías (Nicho, Diseñador, Decants).
-  * Control de cantidades con `Spinbox` y validación de enteros.
-  * Carrito de compras reactivo con cálculo de subtotales, totales y recuento de artículos.
-  * Finalización de venta con generación de folio único (`RS-1001`), marca de tiempo y reseteo de orden.
-* **Lo que hace:** Simula el sistema de punto de venta para la boutique de fragancias **Ryan.ShopMx**, permitiendo seleccionar productos, ajustar cantidades, revisar la orden en tiempo real y emitir tickets de compra.
-* **Ejecución:**
+### 7. `main.py` — Proyecto Integrador: Sistema POS Ryan.ShopMx
+* **Tema en Perfumería:** Sistema de punto de venta (POS) y caja registradora para la boutique física de fragancias de lujo.
+* **Componentes de Tkinter Utilizados:**
+  * Arquitectura completa en Programación Orientada a Objetos (`class RyanShopApp`).
+  * Interfaz a dos columnas (Catálogo a la izquierda, Resumen de Orden a la derecha).
+  * Filtrado dinámico por categorías (Nicho, Diseñador, Decants).
+  * `tk.Spinbox` para control y validación de cantidades de piezas.
+  * `tk.Text` configurado en modo solo lectura (`state="disabled"`) para proteger el ticket de manipulaciones accidentales.
+  * Botones de vaciado de orden y finalización de venta con emisión de folio correlativo (`RS-1001`), fecha/hora y total acumulado.
+* **Lo que hace el programa:** Permite al cajero seleccionar perfumes, ingresar la cantidad deseada, ver el desglose en tiempo real y emitir el ticket de compra con confirmación interactiva.
+* **Comando para ejecutar:**
   ```bash
   python main.py
   ```
 
 ---
 
-## 📊 Matriz Comparativa de Widgets y Módulos
+## 📊 Matriz de Widgets y Funcionalidades de Tkinter
 
-| Widget / Módulo | Propósito Principal | Archivo(s) de Demostración |
+| Widget / Módulo | Demostración en el Proyecto | Archivo Principal |
 | :--- | :--- | :--- |
-| `tk.Label` | Textos, títulos e indicadores | Todos |
-| `tk.Button` | Acciones y disparadores de eventos | `01`, `02`, `03`, `04`, `05`, `main.py` |
-| `tk.Entry` | Entrada de texto de una sola línea | `01_widgets_basicos.py` |
-| `tk.Checkbutton` | Selección booleana (Verdadero / Falso) | `01_widgets_basicos.py` |
-| `tk.Radiobutton` | Selección exclusiva entre opciones | `01_widgets_basicos.py`, `main.py` |
-| `tk.Scale` | Selector de rango numérico / slider | `01_widgets_basicos.py`, `05_canvas_y_eventos.py` |
-| `tk.Spinbox` | Selector de cantidad numérica paso a paso | `main.py` |
-| `tk.Text` | Editor de texto multilínea / resumen | `06_menus_y_atajos.py`, `main.py` |
-| `tk.Canvas` | Dibujo vectorial 2D y captura de mouse | `05_canvas_y_eventos.py` |
-| `tk.Menu` | Menú superior y menú contextual | `06_menus_y_atajos.py` |
-| `tk.Toplevel` | Creación de ventanas secundarias modales | `03_dialogos_y_ventanas.py` |
-| `ttk.Treeview` | Tablas de datos con columnas | `04_ttk_avanzado.py` |
-| `ttk.Combobox` | Listas desplegables con eventos | `04_ttk_avanzado.py`, `main.py` |
-| `ttk.Progressbar`| Barras de progreso de carga | `04_ttk_avanzado.py` |
-| `ttk.Notebook` | Pestañas de navegación | `02_administradores_geometria.py` |
-| `messagebox` | Alertas del sistema y confirmaciones | `03`, `04`, `06`, `main.py` |
-| `filedialog` | Selector de archivos del sistema operativo | `03_dialogos_y_ventanas.py`, `06_menus_y_atajos.py` |
-| `colorchooser` | Selector interactivo de color RGB/HEX | `03_dialogos_y_ventanas.py` |
+| `tk.Label` | Títulos, indicadores y fichas técnicas | Todos los archivos |
+| `tk.Button` | Disparador de funciones y acciones interactivas | Todos los archivos |
+| `tk.Entry` | Captura de texto del cliente | `01_widgets_basicos.py` |
+| `tk.Radiobutton` | Elección exclusiva de familia olfativa / perfumes | `01_widgets_basicos.py`, `main.py` |
+| `tk.Checkbutton` | Selección de muestras y empaques de regalo | `01_widgets_basicos.py` |
+| `tk.Scale` | Sliders de concentración de esencia y grosor | `01`, `05_canvas_y_eventos.py` |
+| `tk.Spinbox` | Selector numérico de unidades por perfume | `main.py` |
+| `tk.Text` | Editor de fórmulas olfativas y ticket de compra | `06_menus_y_atajos.py`, `main.py` |
+| `tk.Canvas` | Renderizado de frascos y grabado con mouse | `05_canvas_y_eventos.py` |
+| `tk.Menu` | Barra de menús y menú contextual con clic derecho | `06_menus_y_atajos.py` |
+| `tk.Toplevel` | Ventana secundaria modal de pirámide olfativa | `03_dialogos_y_ventanas.py` |
+| `ttk.Notebook` | Pestañas para comparar pack, grid y place | `02_administradores_geometria.py` |
+| `ttk.Treeview` | Tabla de inventario de perfumes con columnas | `04_ttk_avanzado.py` |
+| `ttk.Combobox` | Menús desplegables para filtrar fragancias | `04_ttk_avanzado.py`, `main.py` |
+| `ttk.Progressbar`| Barra de progreso para maceración de aceites | `04_ttk_avanzado.py` |
+| `messagebox` | Alertas de stock, errores de cobro y avisos | `03`, `04`, `06`, `main.py` |
+| `filedialog` | Guardado de fórmulas y exportación de listas | `03_dialogos_y_ventanas.py`, `06_menus_y_atajos.py` |
+| `colorchooser` | Selector de tono del líquido y cristal del frasco | `03_dialogos_y_ventanas.py` |
 
 ---
 
 ## 🚀 Requisitos e Instalación
 
-### Requisitos Previos
-* **Python 3.8 o superior**.
-* `Tkinter` viene incluido por defecto en las instalaciones oficiales de Python para Windows y macOS. En sistemas Linux (Ubuntu/Debian) se puede instalar mediante:
-  ```bash
-  sudo apt-get install python3-tk
-  ```
+### Requisitos
+* **Python 3.8 o superior** instalado.
+* `Tkinter` viene preinstalado por defecto en Python en Windows y macOS.
 
-### Clonar el Repositorio
+### Clonar el Proyecto desde GitHub
 ```bash
 git clone https://github.com/ryanmontiel26-jpg/ryan-shop-pos.git
 cd ryan-shop-pos
 ```
 
-### Ejecutar Cualquier Módulo
-Para probar un archivo específico, ejecuta su comando en la terminal:
+### Probar los Módulos
+Cada archivo es completamente independiente y autocontenido. Puedes ejecutar cualquiera de ellos:
+
 ```bash
-# Ejemplo: probar los widgets básicos
+# Probar el asesor olfativo
 python 01_widgets_basicos.py
 
-# Ejemplo: probar la aplicación completa
+# Probar el grabador interactivo de frascos
+python 05_canvas_y_eventos.py
+
+# Probar la caja registradora / POS
 python main.py
 ```
 
@@ -197,9 +214,9 @@ python main.py
 
 ## 👤 Autor
 * **Ryan Montiel** — [@ryanmontiel26-jpg](https://github.com/ryanmontiel26-jpg)
-* **Correo:** ryanmontiel26@gmail.com
+* **Contacto:** ryanmontiel26@gmail.com
 
 ---
 
 ## 📄 Licencia
-Este repositorio se encuentra publicado bajo la licencia **MIT**, permitiendo su uso libre tanto para fines educativos como comerciales.
+Este proyecto está publicado bajo la licencia **MIT**, permitiendo su uso libre tanto para fines académicos como comerciales.

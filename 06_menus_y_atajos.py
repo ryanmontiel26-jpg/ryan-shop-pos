@@ -1,96 +1,108 @@
 ﻿"""
 06_menus_y_atajos.py
+Tema: Bitácora de Fórmulas y Reseñas de Perfumería (Perfumist Lab Notebook)
 Demostración de menús, atajos de teclado y eventos avanzados:
-- Menu (barra de menús superior con submenús Archivo, Edición, Ayuda)
-- Menú Contextual (menú flotante que aparece con clic derecho)
-- Atajos de teclado (Keyboard Accelerators con bind: Ctrl+N, Ctrl+S, Ctrl+Q)
-- Widget Text interactivo (editor básico de notas)
+- Menu (barra superior: Archivo, Fórmulas Olfativas, Edición, Ayuda)
+- Menú contextual flotante con clic derecho (insertar notas aromáticas y portapapeles)
+- Atajos de teclado vinculados con bind (Ctrl+N, Ctrl+S, Ctrl+Q)
+- Widget Text enriquecido con scrollbar para redactar pirámides olfativas y fórmulas
 """
 
 import tkinter as tk
 from tkinter import messagebox, filedialog
 
-class EditorConMenus:
+class BitacoraPerfumistaApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("06 - Barra de Menús, Menú Contextual y Atajos")
-        self.root.geometry("650x500")
-        self.root.config(bg="#1e1e2e")
+        self.root.title("06 - Bitácora de Fórmulas | Menús y Atajos")
+        self.root.geometry("680x540")
+        self.root.config(bg="#121212")
 
         self.crear_barra_menus()
-        self.crear_area_texto()
+        self.crear_editor_texto()
         self.crear_menu_contextual()
         self.vincular_atajos()
 
     def crear_barra_menus(self):
-        # Barra principal de menús
-        barra_menu = tk.Menu(self.root)
+        barra = tk.Menu(self.root)
 
         # 1. Menú Archivo
-        menu_archivo = tk.Menu(barra_menu, tearoff=0)
-        menu_archivo.add_command(label="Nuevo", accelerator="Ctrl+N", command=self.nuevo_archivo)
-        menu_archivo.add_command(label="Abrir...", accelerator="Ctrl+O", command=self.abrir_archivo)
-        menu_archivo.add_command(label="Guardar...", accelerator="Ctrl+S", command=self.guardar_archivo)
-        menu_archivo.add_separator()
-        menu_archivo.add_command(label="Salir", accelerator="Ctrl+Q", command=self.root.quit)
-        barra_menu.add_cascade(label="Archivo", menu=menu_archivo)
+        m_archivo = tk.Menu(barra, tearoff=0)
+        m_archivo.add_command(label="Nueva Bitácora", accelerator="Ctrl+N", command=self.nueva_bitacora)
+        m_archivo.add_command(label="Cargar Fórmula...", accelerator="Ctrl+O", command=self.abrir_formula)
+        m_archivo.add_command(label="Guardar Fórmula...", accelerator="Ctrl+S", command=self.guardar_formula)
+        m_archivo.add_separator()
+        m_archivo.add_command(label="Salir", accelerator="Ctrl+Q", command=self.root.quit)
+        barra.add_cascade(label="Archivo", menu=m_archivo)
 
-        # 2. Menú Edición
-        menu_edicion = tk.Menu(barra_menu, tearoff=0)
-        menu_edicion.add_command(label="Cortar", command=lambda: self.txt_editor.event_generate("<<Cut>>"))
-        menu_edicion.add_command(label="Copiar", command=lambda: self.txt_editor.event_generate("<<Copy>>"))
-        menu_edicion.add_command(label="Pegar", command=lambda: self.txt_editor.event_generate("<<Paste>>"))
-        menu_edicion.add_separator()
-        menu_edicion.add_command(label="Seleccionar Todo", command=self.seleccionar_todo)
-        barra_menu.add_cascade(label="Edición", menu=menu_edicion)
+        # 2. Menú Acordes y Notas Olfativas (Específico de Perfumería)
+        m_acordes = tk.Menu(barra, tearoff=0)
+        m_acordes.add_command(label="Insertar Plantilla Pirámide Olfativa", command=self.insertar_plantilla_piramide)
+        m_acordes.add_separator()
+        m_acordes.add_command(label="+ Acorde Cítrico (Bergamota / Limón)", command=lambda: self.insertar_texto("• Salida: Bergamota de Calabria, Mandarina italiana\n"))
+        m_acordes.add_command(label="+ Acorde Oriental (Ámbar / Vainilla)", command=lambda: self.insertar_texto("• Fondo: Vainilla de Madagascar, Ámbar gris, Benjuí\n"))
+        m_acordes.add_command(label="+ Acorde Amaderado (Oud / Sándalo)", command=lambda: self.insertar_texto("• Corazón: Madera de Oud de Camboya, Sándalo de Mysore\n"))
+        barra.add_cascade(label="Acordes Olfativos", menu=m_acordes)
 
-        # 3. Menú Ayuda
-        menu_ayuda = tk.Menu(barra_menu, tearoff=0)
-        menu_ayuda.add_command(label="Acerca de...", command=self.mostrar_acerca_de)
-        barra_menu.add_cascade(label="Ayuda", menu=menu_ayuda)
+        # 3. Menú Edición
+        m_edicion = tk.Menu(barra, tearoff=0)
+        m_edicion.add_command(label="Cortar", command=lambda: self.txt_editor.event_generate("<<Cut>>"))
+        m_edicion.add_command(label="Copiar", command=lambda: self.txt_editor.event_generate("<<Copy>>"))
+        m_edicion.add_command(label="Pegar", command=lambda: self.txt_editor.event_generate("<<Paste>>"))
+        m_edicion.add_separator()
+        m_edicion.add_command(label="Seleccionar Todo", command=self.seleccionar_todo)
+        barra.add_cascade(label="Edición", menu=m_edicion)
 
-        self.root.config(menu=barra_menu)
+        # 4. Menú Ayuda
+        m_ayuda = tk.Menu(barra, tearoff=0)
+        m_ayuda.add_command(label="Glosario del Perfumista", command=self.mostrar_glosario)
+        m_ayuda.add_command(label="Acerca de Ryan.ShopMx", command=self.mostrar_acerca_de)
+        barra.add_cascade(label="Ayuda", menu=m_ayuda)
 
-    def crear_area_texto(self):
-        # Marco para el editor con scrollbar
-        frame_editor = tk.Frame(self.root, bg="#1e1e2e")
-        frame_editor.pack(fill="both", expand=True, padx=15, pady=10)
+        self.root.config(menu=barra)
 
-        self.scrollbar = tk.Scrollbar(frame_editor)
-        self.scrollbar.pack(side="right", fill="y")
+    def crear_editor_texto(self):
+        # Header de la Bitácora
+        tk.Label(
+            self.root, 
+            text="📓 BITÁCORA DEL PERFUMISTA — CREACIÓN DE FÓRMULAS", 
+            font=("Helvetica", 11, "bold"), 
+            bg="#121212", 
+            fg="#d4af37"
+        ).pack(pady=(10, 4))
+
+        frame_editor = tk.Frame(self.root, bg="#121212")
+        frame_editor.pack(fill="both", expand=True, padx=15, pady=6)
+
+        scroll = tk.Scrollbar(frame_editor)
+        scroll.pack(side="right", fill="y")
 
         self.txt_editor = tk.Text(
             frame_editor, 
-            bg="#181825", 
-            fg="#cdd6f4", 
-            insertbackground="#f5c2e7",
-            font=("Consolas", 11), 
+            bg="#181818", 
+            fg="#f0f0f0", 
+            insertbackground="#d4af37",
+            font=("Consolas", 10), 
             wrap="word", 
-            yscrollcommand=self.scrollbar.set,
-            padx=10, 
-            pady=10
+            yscrollcommand=scroll.set,
+            padx=12, 
+            pady=12, 
+            relief="solid", 
+            bd=1
         )
         self.txt_editor.pack(fill="both", expand=True)
-        self.scrollbar.config(command=self.txt_editor.yview)
+        scroll.config(command=self.txt_editor.yview)
 
-        texto_inicial = (
-            "✨ Bienvenido al demostrador de menús y atajos de Tkinter ✨\n\n"
-            "Prueba las siguientes funciones:\n"
-            "1. Haz CLIC DERECHO en cualquier parte de este texto para abrir el menú contextual.\n"
-            "2. Usa los atajos de teclado:\n"
-            "   - Ctrl + N : Nuevo documento\n"
-            "   - Ctrl + S : Guardar documento\n"
-            "   - Ctrl + Q : Salir de la aplicación\n"
-            "3. Explora las opciones en la barra de menú superior (Archivo, Edición, Ayuda)."
-        )
-        self.txt_editor.insert("1.0", texto_inicial)
+        # Texto inicial
+        self.insertar_plantilla_piramide()
 
         # Barra de estado
         self.lbl_estado = tk.Label(
             self.root, 
-            text="Listo | Atajos habilitados: Ctrl+N, Ctrl+S, Ctrl+Q", 
-            bg="#11111b", 
-            fg="#a6adc8", 
+            text="Bitácora lista | Atajos: Ctrl+N (Nuevo), Ctrl+S (Guardar), Clic Derecho (Acordes)", 
+            bg="#1a1a1a", 
+            fg="#888888", 
+            font=("Consolas", 8), 
             anchor="w", 
             padx=12, 
             pady=4
@@ -98,52 +110,91 @@ class EditorConMenus:
         self.lbl_estado.pack(fill="x", side="bottom")
 
     def crear_menu_contextual(self):
-        # Menú flotante para clic derecho
         self.menu_contextual = tk.Menu(self.root, tearoff=0)
+        self.menu_contextual.add_command(label="Insertar Acorde Cítrico", command=lambda: self.insertar_texto("• Salida: Bergamota y Neroli\n"))
+        self.menu_contextual.add_command(label="Insertar Acorde Amaderado", command=lambda: self.insertar_texto("• Fondo: Cedro de Virginia y Pachulí\n"))
+        self.menu_contextual.add_separator()
         self.menu_contextual.add_command(label="Cortar", command=lambda: self.txt_editor.event_generate("<<Cut>>"))
         self.menu_contextual.add_command(label="Copiar", command=lambda: self.txt_editor.event_generate("<<Copy>>"))
         self.menu_contextual.add_command(label="Pegar", command=lambda: self.txt_editor.event_generate("<<Paste>>"))
-        self.menu_contextual.add_separator()
-        self.menu_contextual.add_command(label="Seleccionar Todo", command=self.seleccionar_todo)
 
-        # Asociar clic derecho en Windows (<Button-3>)
-        self.txt_editor.bind("<Button-3>", self.mostrar_menu_contextual)
-
-    def mostrar_menu_contextual(self, event):
-        self.menu_contextual.post(event.x_root, event.y_root)
+        self.txt_editor.bind("<Button-3>", lambda e: self.menu_contextual.post(e.x_root, e.y_root))
 
     def vincular_atajos(self):
-        self.root.bind("<Control-n>", lambda e: self.nuevo_archivo())
-        self.root.bind("<Control-s>", lambda e: self.guardar_archivo())
+        self.root.bind("<Control-n>", lambda e: self.nueva_bitacora())
+        self.root.bind("<Control-s>", lambda e: self.guardar_formula())
         self.root.bind("<Control-q>", lambda e: self.root.quit())
 
-    def nuevo_archivo(self):
-        self.txt_editor.delete("1.0", tk.END)
-        self.lbl_estado.config(text="Nuevo documento creado.")
+    def insertar_texto(self, texto):
+        self.txt_editor.insert(tk.INSERT, texto)
 
-    def abrir_archivo(self):
-        ruta = filedialog.askopenfilename(filetypes=[("Archivos de texto", "*.txt"), ("Todos", "*.*")])
+    def insertar_plantilla_piramide(self):
+        plantilla = (
+            "═══════════════════════════════════════════════════════\n"
+            "  FÓRMULA OLFATIVA MAESTRA — HAUTE PARFUMERIE LAB      \n"
+            "═══════════════════════════════════════════════════════\n"
+            "NOMBRE DEL PROTOTIPO : Golden Elixir No. 7\n"
+            "PERFUMISTA CREADOR   : Ryan Montiel\n"
+            "CONCENTRACIÓN FINAL  : Extrait de Parfum (28% Aceite)\n\n"
+            "[1. NOTAS DE SALIDA - TOP NOTES] (Evaporación: 0 - 30 min)\n"
+            "• Bergamota de Calabria: 15%\n"
+            "• Manzana Verde Crujiente: 8%\n"
+            "• Pimienta Rosa de Madagascar: 4%\n\n"
+            "[2. NOTAS DE CORAZÓN - HEART NOTES] (Evaporación: 30 min - 4 hrs)\n"
+            "• Jazmín Sambac: 12%\n"
+            "• Rosa Damascena: 10%\n"
+            "• Miel Dorada Silvestre: 6%\n\n"
+            "[3. NOTAS DE FONDO - BASE NOTES] (Fijación: 8+ hrs)\n"
+            "• Madera de Agar (Oud): 18%\n"
+            "• Ámbar Gris Suave: 12%\n"
+            "• Vainilla Bourbon: 15%\n\n"
+            "OBSERVACIONES DE MACERACIÓN:\n"
+            "Reposo requerido de 30 días a 18°C en oscuridad total.\n"
+            "═══════════════════════════════════════════════════════\n"
+        )
+        self.txt_editor.delete("1.0", tk.END)
+        self.txt_editor.insert("1.0", plantilla)
+
+    def nueva_bitacora(self):
+        self.txt_editor.delete("1.0", tk.END)
+        self.lbl_estado.config(text="Nueva bitácora en blanco iniciada.")
+
+    def abrir_formula(self):
+        ruta = filedialog.askopenfilename(filetypes=[("Fórmulas de Perfume (*.txt)", "*.txt"), ("Todos", "*.*")])
         if ruta:
             with open(ruta, "r", encoding="utf-8") as f:
-                contenido = f.read()
-            self.txt_editor.delete("1.0", tk.END)
-            self.txt_editor.insert("1.0", contenido)
-            self.lbl_estado.config(text=f"Archivo abierto: {ruta}")
+                self.txt_editor.delete("1.0", tk.END)
+                self.txt_editor.insert("1.0", f.read())
+            self.lbl_estado.config(text=f"Fórmula cargada desde: {ruta}")
 
-    def guardar_archivo(self):
-        ruta = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("Archivos de texto", "*.txt")])
+    def guardar_formula(self):
+        ruta = filedialog.asksaveasfilename(
+            defaultextension=".txt",
+            initialfile="formula_perfume.txt",
+            filetypes=[("Fórmulas de Perfume (*.txt)", "*.txt"), ("Todos", "*.*")]
+        )
         if ruta:
             with open(ruta, "w", encoding="utf-8") as f:
                 f.write(self.txt_editor.get("1.0", tk.END))
-            self.lbl_estado.config(text=f"Guardado exitosamente en: {ruta}")
+            self.lbl_estado.config(text=f"Fórmula guardada exitosamente en: {ruta}")
 
     def seleccionar_todo(self):
         self.txt_editor.tag_add("sel", "1.0", tk.END)
 
+    def mostrar_glosario(self):
+        msg = (
+            "GLOSARIO DE PERFUMERÍA:\n\n"
+            "• Sillage: La estela aromática que deja una persona al pasar.\n"
+            "• Longevidad: Cuántas horas permanece la fragancia en piel.\n"
+            "• Decant: Porción de 2ml a 10ml extraída del frasco original.\n"
+            "• Maceración: Tiempo de reposo químico para amalgamar aceites."
+        )
+        messagebox.showinfo("Glosario Olfativo", msg)
+
     def mostrar_acerca_de(self):
-        messagebox.showinfo("Acerca de", "Demostrador de Menús y Atajos en Tkinter\nRyan.ShopMx - Python GUI Series")
+        messagebox.showinfo("Acerca de", "Bitácora de Laboratorio Olfativo\nRyan.ShopMx — Sistema de Creación de Fragancias")
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = EditorConMenus(root)
+    app = BitacoraPerfumistaApp(root)
     root.mainloop()
